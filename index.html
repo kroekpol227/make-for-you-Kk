@@ -18,7 +18,7 @@
       margin: 0;
       background: linear-gradient(180deg, #ffe6f0, #ffffff);
       color: #444;
-      overflow: hidden; /* ล็อคไว้จนกว่าจะใส่รหัส */
+      overflow: hidden; /* ล็อคไว้จนกว่าจะปลดล็อค */
     }
 
     /* ===== LOCK SCREEN ===== */
@@ -46,8 +46,6 @@
       box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
 
-    .lock-box h2 { margin-top: 0; }
-
     .lock-box input {
       width: 100%;
       padding: 14px;
@@ -70,19 +68,12 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s;
     }
-
-    .lock-box button:active { transform: scale(0.95); }
 
     .error {
       margin-top: 12px;
       font-size: 0.9rem;
-      color: #fff;
       display: none;
-      background: rgba(255,0,0,0.3);
-      padding: 5px;
-      border-radius: 8px;
     }
 
     /* ===== MAIN CONTENT ===== */
@@ -132,7 +123,6 @@
     .card h2 { color: #ff4f91; margin-bottom: 20px; }
     .card p { font-size: 1rem; line-height: 1.8; white-space: pre-line; }
 
-    /* ❤️ IMAGE HEART FRAME */
     .message-img {
       width: 100%;
       max-width: 240px;
@@ -149,10 +139,9 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* 🎬 VIDEO SECTION */
     .video-wrapper {
       position: relative;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      padding-top: 56.25%; 
       border-radius: 16px;
       overflow: hidden;
       background: #000;
@@ -197,12 +186,10 @@
   </div>
 
   <div id="mainContent">
-
     <section class="hero">
       <h1>สำหรับเธอ 💗</h1>
       <p>
         สวัสดีครับ เป็นไงบ้าง วันนี้เหนื่อยไหมครับ<br>
-        ได้ทำอะไรมาบ้าง มีเรื่องอะไรให้ต้องกังวลหรือเปล่า<br>
         แวะมาให้กำลังใจนะครับ<br>
         หวังว่าข้อความเล็ก ๆ นี้ จะทำให้ยิ้มได้นิดหนึ่งครับ 
       </p>
@@ -248,15 +235,24 @@
       const video = document.getElementById("myVideo");
 
       if (code === "240240") {
-        // 1. ซ่อนหน้าล็อค แสดงเนื้อหา
+        // 1. ปลดล็อคหน้าจอ
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
         document.body.style.overflow = "auto";
         
-        // 2. สั่งโหลดและเล่นวิดีโอทันที (Mobile จะยอมให้เล่นเพราะเกิดจาก Click event)
+        // 2. iOS Trick: ต้องสั่งโหลดและเล่นทันทีในคลิกเดียว
         if(video) {
-          video.load();
-          video.play().catch(e => console.log("Autoplay blocked:", e));
+          video.load(); // สั่งให้ iOS เตรียมไฟล์
+          
+          // ใช้ Promise เช็คการเล่นเพลง
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              console.log("iOS: Playing success");
+            }).catch(error => {
+              console.log("iOS: Autoplay blocked, user must click play manually");
+            });
+          }
         }
       } else {
         document.getElementById("errorMsg").style.display = "block";
