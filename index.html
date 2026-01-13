@@ -1,294 +1,306 @@
 <!DOCTYPE html>
-<html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="th">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="css/foundation.css" />
-	<link rel="stylesheet" href="css/animate.css" />
-	<link rel="stylesheet" href="css/style.css" />
-    <script src="js/vendor/modernizr.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For You 💕</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #ffe6f0, #ffffff);
+      color: #444;
+      overflow: hidden;
+      cursor: url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'>\
+        <text y='24' font-size='24'>💗</text>\
+      </svg>") 16 16, auto;
+    }
+
+    /* ===== LOCK SCREEN ===== */
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ff9acb, #ff6fa5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .video-wrapper {
+  position: relative;
+  padding-top: 56.25%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.video-wrapper video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+    .lock-box {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      padding: 40px 30px;
+      border-radius: 28px;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .lock-box input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+
+    .lock-box button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: white;
+      color: #ff4f91;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .error {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content {
+      display: none;
+    }
+
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9acb, #ff6fa5);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: white;
+      color: #ff4f91;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .card {
+      max-width: 720px;
+      margin: 70px auto;
+      background: white;
+      padding: 45px 35px;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(255, 105, 180, 0.15);
+      text-align: center;
+    }
+
+    .card.pink {
+      background: #fff0f6;
+    }
+
+    .card h2 {
+      color: #ff4f91;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      white-space: pre-line;
+    }
+
+    /* ❤️ IMAGE HEART FRAME */
+    .message-img {
+      width: 100%;
+      max-width: 260px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      margin: 22px auto 26px;
+
+      clip-path: path(
+        "M130 240 
+         C130 240 20 160 20 90 
+         C20 40 70 20 110 55 
+         C130 75 130 75 150 55 
+         C190 20 240 40 240 90 
+         C240 160 130 240 130 240 Z"
+      );
+
+      box-shadow: 0 16px 30px rgba(255, 105, 180, 0.35);
+      animation: floatHeart 3s ease-in-out infinite;
+    }
+
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #ff6fa5;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
+
 <body>
-	<div class="section1">
-		<div class="row">
-			<div class="columns medium-12 text-center congratulation-text">
-				Congratulation !!
-				Just
-				Scroll
-				Down
-			</div>
-		</div>
-		<div class="login-form">
-			<div class="row">
-				<div class="columns medium-12 text-center">
-					<h2>Enter Code</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="columns medium-offset-4 medium-2">
-					<input type="text" name="code[]" placeholder="?" maxlength="1" class="code text-center">
-				</div>
-				<div class="columns medium-2 end">
-					<input type="text" name="code[]" placeholder="?" maxlength="1" class="code text-center">
-				</div>
-			</div>
-			<div class="row">
-				<div class="columns medium-12 text-center">
-					<div id="textMachine">
-						<div>
-							<span class=" text-error">
-								Wrong Code<img src="img/fail1.png" alt="" class="fix-size">
-							</span>
-						</div>
-						<div>
-							<span class=" text-error">
-								Wrong Code<img src="img/fail2.png" alt="" class="fix-size">
-							</span>
-						</div>
-						<div>
-							<span class=" text-error">
-								Wrong Code<img src="img/fail3.png" alt="" class="fix-size">
-							</span>
-						</div>
-						<div>
-							<span class="success">
-								Success !!<img src="img/success.png" alt="" class="fix-size">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="columns medium-12 text-center">
-					<button id="unlock" class="round pink">
-						Unlock
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<div class="success-area">
-		<div class="section2">
-			<div class="row">
-				<div class="columns medium-12 wow fadeIn"
-			    		data-wow-duration="2s" data-wow-delay="0.1s">
-					<img src="img/hbd.png" alt="">
-					<p>
-						สุขสันต์วันเกิดนะคะ ขอให้สุขภาพร่างกายแข็งแรง อยู่กับพี่ไปนานๆนะคะ ขอให้ครอบครัวของเราสองคนแข็งแรงทุกคนเลย
-						เป็นคนน่ารักของพี่ไปนานๆนะคะ
-					</p>
-					<p>
-						หากวันไหนท้อแท้ก็กลับมาเปิดอ่านทั้งส่วนของที่ทำให้และก็เว็บนี้ก็ได้นะคะ ฮ่าๆ ก็เป็นกำลังใจให้กันและกันเสมอคร้า >3<
-					</p>
-				</div>
-			</div>
-		</div>
-		<div class="section3">
-			<div class="row">
-				<div class="columns medium-12 wow fadeIn" data-wow-duration="2s" data-wow-delay="0.1s">
-					<h2>Work</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="columns medium-6 paragraph wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.1s">
-					ขอให้หน้าที่ก้าวหน้าขึ้นเรื่อยๆ และไม่เจอปัญหาด้านคนนะคะ หนูชอบอะไรพี่ก็จะค่อยสนับสนุนนะคะ ทุกอย่างยากที่เริ่มต้น อย่าท้อ
-					อย่าถอย ก้าวไปเรื่อยๆในทางที่ชอบค่ะ ติดอะไร อยากทำอะไรมาบอกกันช่วยๆกัน งานไม่ยากหรอกถ้าหากเราไม่ถอยค่า ^_^
-				</div>
-				<div class="columns medium-6 text-center wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.1s">
-					<div class="polaroids">
-					  	<ul>
-						    <li>
-						      <a title="แอบถ่ายคนทำงาน ^3^" href="#">
-						      <img alt="" src="img/demoimg.jpg">
-						      </a><span class="pin"></span>
-						    </li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="section4">
-			<div class="row">
-				<div class="columns medium-12 wow fadeIn" data-wow-duration="2s" data-wow-delay="0.1s">
-					<h2>Healthy</h2>
-				</div>
-			</div>
-			<div class="row">
+  <!-- 🔒 LOCK SCREEN -->
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-box">
+      <h2>รหัสลับ 💕</h2>
+      <p>Secret for you</p>
+      <input type="password" id="code" placeholder="ใส่รหัสตรงนี้">
+      <button onclick="checkCode()">เข้าไปดู 💗</button>
+      <div class="error" id="errorMsg">ยังไม่ถูกนะ ลองใหม่อีกครั้ง 🥺</div>
+    </div>
+  </div>
 
-				<div class="columns medium-6 wow paragraph fadeInRight" data-wow-duration="2s" data-wow-delay="0.1s">
-					เรากินกันเยอะเนอะ ตอนนี้หนูยังสนุกกับการกินก็ต้องระวังสุขภาพนะคะ พี่ก็จะพยายามออกกำลังกายแน่นอน น้า หากว่าเหนื่อยก็บอก
-					อยากพักก็บอกกัน มีปัญหาอะไรก็มาปรึกษากันเนอะ
-				</div>
-				<div class="columns medium-6 text-center wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.1s">
-					<div class="polaroids">
-					  	<ul>
-						    <li>
-						      <a title="กินๆๆๆ" href="#">
-						      <img alt="" src="img/demoimg.jpg">
-						      </a><span class="pin"></span>
-						    </li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="section5">
-			<div class="row">
-				<div class="columns medium-12 wow fadeIn">
-					<h2>Love</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="columns medium-6 wow paragraph fadeInLeft" data-wow-duration="2s" data-wow-delay="0.1s">
-					ปีนี้อาจจะเป็นปีที่ดีของเราทั้งสองคนที่ได้มาเจอกัน แต่อย่างว่าแหละ ระยะทางเป็นสิ่งพิสูจน์การกระทำ พี่ก็อยากจะบอกว่า จะไม่ทำให้หนูต้อง
-					ผิดหวังที่ให้โอกาสพี่นะ เรื่องราวของเราได้เริ่มต้นขึ้นแล้ว คงต้องเดินทางอีกไกล แต่ก็ไปด้วยกันเถอะ !! เย้ !! >3<
-				</div>
-				<div class="columns medium-6 text-center wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.1s">
-					<div class="polaroids">
-					  	<ul>
-						    <li>
-						      <a title="รักแมวมากกว่าแฟน" href="#">
-						      <img alt="" src="img/demoimg.jpg">
-						      </a><span class="pin"></span>
-						    </li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="section6">
-			<div class="row">
-				<div class="columns medium-12 wow fadeIn">
-					<h2>One last thing</h2>
-				</div>
-			</div>
-			<div class="row">
+  <!-- 🌸 CONTENT -->
+  <div class="content" id="mainContent">
 
-				<div class="columns medium-6 wow paragraph fadeInRight" data-wow-duration="2s" data-wow-delay="0.1s">
-					 ก็อยากขอบคุณหลายๆอย่างที่ทำให้เราเจอกันแล้วกันเนอะ ทุกอย่างมันดูเหมือนเร็วแต่เราก็เรียนรู้กันทุกวันแหละ เว็บอาจจะไม่สวยนะ ไม่มีหัวด้าน
-					 Design 555 ไว้
-				</div>
-				<div class="columns medium-6 text-center wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.1s">
-					<div class="polaroids">
-					  	<ul>
-						    <li>
-						      <a title="Thank you :)" href="#">
-						      <img alt="" src="img/demoimg.jpg">
-						      </a><span class="pin"></span>
-						    </li>
-						</ul>
-					</div>
-				</div>
-				<p>ฝากเพลงนี้ถึงเธอ ^^</p>
-				<iframe width="854" height="480" src="https://www.youtube.com/embed/Scbh1jmRmek" frameborder="0" allowfullscreen></iframe>
-			</div>
-		</div>
-	</div>
+    <section class="hero">
+      <h1>สำหรับเธอ 💗</h1>
+      <p>
+       สวัสดีครับ เป็นไงบ้าง วันนี้เหนื่อยไหมครับ
+ได้ทำอะไรมาบ้าง มีเรื่องอะไรให้ต้องกังวลหรือเปล่า
+ได้ฟังเพลงที่ชอบไหม ท้องฟ้าสดใสไหมวันนี้
+แวะมาให้กำลังใจนะครับ
+หวังว่าข้อความเล็ก ๆ นี้ จะทำให้ยิ้มได้นิดหนึ่งครับ 
+      </p>
+      <button class="btn" onclick="scrollDown()">เลื่อนลงนะ 💕</button>
+    </section>
+
+    <section class="card">
+      <h2>เราอยากบอกว่า</h2>
+      <img src="img/1.jpg" alt="กำลังใจ" class="message-img">
+      <p>
+        ต่อให้วันนี้ไม่มีกำลังใจจากที่ไหนก็แล้วแต่ อย่างน้อยยังมีเศษเสี้ยวหนึ่งของหัวใจที่คุณต้องให้กำลังใจตัวเองนะ 💗
+      </p>
+    </section>
+
+    <section class="card pink">
+      <h2>ถ้าวันไหนเหนื่อย</h2>
+      <p>
+      
+ไม่เป็นไรเลยนะ ถ้าจะขอพักสักหน่อย
+ใช้ชีวิตช้าลงบ้าง ก็ไม่ผิดอะไร
+และถ้าวันไหน แค่อยากมีใครสักคนคอยรับฟัง
+เราอยู่ตรงนี้นะ… พร้อมรับฟังครับ 🤍
+      </p>
+    </section>
+
+<section class="card">
+  <h2>เผื่อวันไหนเหนื่อย ๆ ฟังเพลงนี้ได้นะครับ</h2>
+
+  <div class="video-wrapper">
+    <video
+      src="img/ฤดูกาล.mp4"
+      controls
+      playsinline
+    ></video>
+  </div>
+</section>
 
 
+    <footer>
+      ยินดีที่ได้รู้จักครับ 😊 💕
+    </footer>
 
+  </div>
 
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script src="js/wow.js"></script>
-    <script src="js/slotmachine.min.js"></script>
-    <script>
-      $(document).foundation();
-      new WOW().init();
-      $('.section1').css({
-      	width: $(window).width(),
-      	height: $(window).height()
-      })
-      // Polaroid img
-      $(".polaroids li a").on("mouseenter", function() {
-      	var isRunning = $(this).data("isRunning");
-      	if (!isRunning) {
-      		$(this).data("isRunning", true);
-      		var $this = $(this).addClass("shake");
-      		setTimeout(function() {
-      			$this.removeClass("shake");
-      			$this.data("isRunning", false);
-      		}, 4500);
-      	}
+  <script>
+    function checkCode() {
+      const code = document.getElementById("code").value;
+      if (code === "240240") {
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        document.body.style.overflow = "auto";
+      } else {
+        document.getElementById("errorMsg").style.display = "block";
+      }
+    }
+
+    function scrollDown() {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: "smooth"
       });
+    }
 
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💗";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 16 + 16 + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 700);
+  </script>
 
-
-
-      (function() {
-          var link_element = document.createElement("link"),
-              s = document.getElementsByTagName("script")[0];
-          if (window.location.protocol !== "http:" && window.location.protocol !== "https:") {
-              link_element.href = "http:";
-          }
-          link_element.href += "//fonts.googleapis.com/css?family=Playball:400";
-          link_element.rel = "stylesheet";
-          link_element.type = "text/css";
-          s.parentNode.insertBefore(link_element, s);
-
-
-
-          // control unlock button
-
-
-
-          var number = 0;
-
-          $('#unlock').on('click', function(event) {
-          		event.preventDefault();
-          		event.stopPropagation();
-
-          		$('#textMachine').css('display', 'inline-block');
-          		var code = '';
-          		$.each($('.code'), function(i, v) {
-          			code += $(v).val();
-          		});
-
-
-          		if(code == '81')
-          		{
-          			// success
-          			var machine = $('#textMachine').slotMachine({
-		      	  		active: 0,
-		      	  		delay: 500,
-		      	  		randomize : function(activeElementIndex){
-							return 3;
-						}
-			      	});
-
-			      	machine.setRandomize(3);
-
-			      	machine.shuffle(5, function(){
-						answerCorrect();
-					});
-          		} else {
-
-          			if(number == 3) { number = 0; }
-
-          			// fail
-          			var machine = $('#textMachine').slotMachine({
-		      	  		active: 1,
-		      	  		delay: 500,
-		      	  		randomize : function(activeElementIndex){
-							return number;
-						}
-			      	});
-
-			      	machine.shuffle(5, function(){
-						number++;
-					});
-          		}
-          });
-
-          var answerCorrect = function() {
-          		$('.login-form').fadeOut();
-          		$('.congratulation-text').fadeIn();
-          		$('.success-area').css('display','block');
-          };
-
-      })();
-    </script>
 </body>
 </html>
