@@ -14,11 +14,26 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    /* ตัวช่วยปลดล็อคการเลื่อน */
+    .allow-scroll {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      height: auto !important;
+    }
+
+    html, body {
       margin: 0;
+      padding: 0;
       background: linear-gradient(180deg, #ffe6f0, #ffffff);
       color: #444;
-      overflow: hidden; /* ล็อคไว้จนกว่าจะปลดล็อค */
+      /* ล็อคไว้ก่อนเข้าเว็บบรรทัดนี้ */
+      overflow: hidden; 
+      width: 100%;
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size: 24px;'><text y='20'>💗</text></svg>"), auto;
+    }
+
+    button, .btn, input, a {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size: 24px;'><text y='20'>💖</text></svg>"), pointer !important;
     }
 
     /* ===== LOCK SCREEN ===== */
@@ -56,6 +71,7 @@
       text-align: center;
       letter-spacing: 3px;
       outline: none;
+      color: #444;
     }
 
     .lock-box button {
@@ -79,6 +95,8 @@
     /* ===== MAIN CONTENT ===== */
     #mainContent {
       display: none;
+      position: relative;
+      width: 100%;
     }
 
     .hero {
@@ -86,7 +104,7 @@
       background: linear-gradient(135deg, #ff9acb, #ff6fa5);
       color: white;
       text-align: center;
-      padding: 80px 20px;
+      padding: 40px 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -94,7 +112,7 @@
     }
 
     .hero h1 { font-size: 2.5rem; margin-bottom: 20px; }
-    .hero p { font-size: 1.1rem; line-height: 1.7; max-width: 520px; }
+    .hero p { font-size: 1.1rem; line-height: 1.7; max-width: 520px; white-space: pre-line; }
 
     .btn {
       margin-top: 30px;
@@ -188,16 +206,11 @@
   <div id="mainContent">
     <section class="hero">
       <h1>สำหรับเธอ 💗</h1>
-      <p>
-        สวัสดีครับ เป็นไงบ้าง วันนี้เหนื่อยไหมครับ
-
-ได้ทำอะไรมาบ้าง มีเรื่องอะไรให้ต้องกังวลหรือเปล่า
-
-ได้ฟังเพลงที่ชอบไหม ท้องฟ้าสดใสไหมวันนี้
-
-แวะมาให้กำลังใจนะครับ
-
-หวังว่าข้อความเล็ก ๆ นี้ จะทำให้ยิ้มได้นิดหนึ่งครับ
+      <p>สวัสดีครับ เป็นไงบ้าง วันนี้เหนื่อยไหมครับ
+        ได้ทำอะไรมาบ้าง มีเรื่องอะไรให้ต้องกังวลหรือเปล่า
+        ได้ฟังเพลงที่ชอบไหม ท้องฟ้าสดใสไหมวันนี้
+        แวะมาให้กำลังใจนะครับ
+        หวังว่าข้อความเล็ก ๆ นี้ จะทำให้ยิ้มได้นิดหนึ่งครับ
       </p>
       <button class="btn" onclick="scrollDown()">เลื่อนลงนะ 💕</button>
     </section>
@@ -210,8 +223,7 @@
 
     <section class="card pink">
       <h2>ถ้าวันไหนเหนื่อย</h2>
-      <p>
-        ไม่เป็นไรเลยนะ ถ้าจะขอพักสักหน่อย
+      <p>ไม่เป็นไรเลยนะ ถ้าจะขอพักสักหน่อย
         ใช้ชีวิตช้าลงบ้าง ก็ไม่ผิดอะไร
         และถ้าวันไหน แค่อยากมีใครสักคนคอยรับฟังเรื่องราว
         ไม่ว่าจะทุกข์หรือสุข เล่าให้ฟังได้นะครับ🤍
@@ -241,24 +253,19 @@
       const video = document.getElementById("myVideo");
 
       if (code === "240240") {
-        // 1. ปลดล็อคหน้าจอ
+        // ปิดหน้าจอ Lock
         document.getElementById("lockScreen").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-        document.body.style.overflow = "auto";
         
-        // 2. iOS Trick: ต้องสั่งโหลดและเล่นทันทีในคลิกเดียว
+        // แสดงเนื้อหาหลัก
+        document.getElementById("mainContent").style.display = "block";
+        
+        // --- จุดสำคัญ: ปลดล็อคการเลื่อน ---
+        document.body.classList.add("allow-scroll");
+        document.documentElement.classList.add("allow-scroll");
+        
         if(video) {
-          video.load(); // สั่งให้ iOS เตรียมไฟล์
-          
-          // ใช้ Promise เช็คการเล่นเพลง
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.then(_ => {
-              console.log("iOS: Playing success");
-            }).catch(error => {
-              console.log("iOS: Autoplay blocked, user must click play manually");
-            });
-          }
+          video.load();
+          video.play().catch(e => console.log("Autoplay blocked"));
         }
       } else {
         document.getElementById("errorMsg").style.display = "block";
@@ -266,13 +273,13 @@
     }
 
     function scrollDown() {
-      window.scrollTo({
-        top: window.innerHeight,
-        behavior: "smooth"
-      });
+      // เลื่อนหน้าจอลงไปที่การ์ดใบแรก
+      const firstCard = document.querySelector('.card');
+      if(firstCard) {
+        firstCard.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
-    // สร้างหัวใจลอยๆ
     setInterval(() => {
       const heart = document.createElement("div");
       heart.className = "heart-bg";
